@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<xml>
+	<name>http://rekino.in/</name>
+	<type>rekino.in</type>
+	<settings>
+		<use_plainlinks>True</use_plainlinks>
+		<use_textasdescription>False</use_textasdescription>
+	</settings>
+	<genres>
+		<type name="Movie" id="0">
+			<subtype type="IReleaseName" value="%.S??E??.%" id="">
+				<subtype type="IReleaseName" value="Elfen.Lied%" id="48"/>
+				<subtype type="IReleaseName" value="The.Big.Bang.Theory.S01%" id="37"/>
+			</subtype>
+			<subtype type="IReleaseName" value="%.E??.%" id="">
+				<subtype type="IReleaseName" value="Elfen.Lied%" id="48"/>
+				<subtype type="IReleaseName" value="The.Big.Bang.Theory.S01%" id="37"/>
+			</subtype>
+			<subtype type="IReleaseName" value="%.HDTV.%" id="">
+				<subtype type="IReleaseName" value="Elfen.Lied%" id="48"/>
+				<subtype type="IReleaseName" value="The.Big.Bang.Theory.S01%" id="37"/>
+			</subtype>
+			<subtype type="IReleaseName" value="%.dTV.%" id="">
+				<subtype type="IReleaseName" value="Elfen.Lied%" id="48"/>
+				<subtype type="IReleaseName" value="The.Big.Bang.Theory.S01%" id="37"/>
+			</subtype>
+			<subtype type="IReleaseName" value="%.Staffel%" id="">
+				<subtype type="IReleaseName" value="Elfen.Lied%" id="48"/>
+				<subtype type="IReleaseName" value="The.Big.Bang.Theory.S01%" id="37"/>
+			</subtype>
+			<subtype type="IGenre" value="Action" id="12">
+				<subtype type="IVideoCodec" value="MPEG-2" id="54"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="55"/>
+				<subtype type="IVideoStream" value="BD" id="53">
+					<subtype type="IReleaseName" value="%.720p.%" id="49"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="50"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Abenteuer" id="13">
+				<subtype type="IVideoCodec" value="MPEG-2" id="141"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="142"/>
+				<subtype type="IVideoStream" value="BD" id="139">
+					<subtype type="IReleaseName" value="%.720p.%" id="137"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="138"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Animation" id="14">
+				<subtype type="IVideoCodec" value="MPEG-2" id="134"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="136"/>
+				<subtype type="IVideoStream" value="BD" id="135">
+					<subtype type="IReleaseName" value="%.720p.%" id="132"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="133"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Cartoon" id="26">
+				<subtype type="IVideoCodec" value="MPEG-2" id="74"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="75"/>
+				<subtype type="IVideoStream" value="BD" id="73">
+					<subtype type="IReleaseName" value="%.720p.%" id="71"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="72"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Comedy" id="21">
+				<subtype type="IVideoCodec" value="MPEG-2" id="99"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="100"/>
+				<subtype type="IVideoStream" value="BD" id="98">
+					<subtype type="IReleaseName" value="%.720p.%" id="96"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="97"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Crime" id="16">
+				<subtype type="IVideoCodec" value="MPEG-2" id="124"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="125"/>
+				<subtype type="IVideoStream" value="BD" id="123">
+					<subtype type="IReleaseName" value="%.720p.%" id="121"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="122"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Documentation" id="38">
+				<subtype type="IVideoCodec" value="MPEG-2" id="69"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="70"/>
+				<subtype type="IVideoStream" value="BD" id="68">
+					<subtype type="IReleaseName" value="%.720p.%" id="66"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="67"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Drama" id="17">
+				<subtype type="IVideoCodec" value="MPEG-2" id="119"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="120"/>
+				<subtype type="IVideoStream" value="BD" id="118">
+					<subtype type="IReleaseName" value="%.720p.%" id="116"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="117"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Fantasy" id="18">
+				<subtype type="IVideoCodec" value="MPEG-2" id="114"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="115"/>
+				<subtype type="IVideoStream" value="BD" id="113">
+					<subtype type="IReleaseName" value="%.720p.%" id="111"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="112"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Horror" id="19">
+				<subtype type="IVideoCodec" value="MPEG-2" id="109"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="110"/>
+				<subtype type="IVideoStream" value="BD" id="108">
+					<subtype type="IReleaseName" value="%.720p.%" id="106"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="107"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Mystery" id="23">
+				<subtype type="IVideoCodec" value="MPEG-2" id="89"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="90"/>
+				<subtype type="IVideoStream" value="BD" id="88">
+					<subtype type="IReleaseName" value="%.720p.%" id="86"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="87"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Musical" id="44">
+				<subtype type="IVideoCodec" value="MPEG-2" id="59"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="60"/>
+				<subtype type="IVideoStream" value="BD" id="58">
+					<subtype type="IReleaseName" value="%.720p.%" id="56"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="57"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Science Fiction" id="24">
+				<subtype type="IVideoCodec" value="MPEG-2" id="84"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="85"/>
+				<subtype type="IVideoStream" value="BD" id="83">
+					<subtype type="IReleaseName" value="%.720p.%" id="81"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="82"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Thriller" id="25">
+				<subtype type="IVideoCodec" value="MPEG-2" id="79"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="80"/>
+				<subtype type="IVideoStream" value="BD" id="78">
+					<subtype type="IReleaseName" value="%.720p.%" id="76"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="77"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="War" id="22">
+				<subtype type="IVideoCodec" value="MPEG-2" id="94"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="95"/>
+				<subtype type="IVideoStream" value="BD" id="93">
+					<subtype type="IReleaseName" value="%.720p.%" id="91"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="92"/>
+				</subtype>
+			</subtype>
+			<subtype type="IGenre" value="Western" id="43">
+				<subtype type="IVideoCodec" value="MPEG-2" id="64"/>
+				<subtype type="IVideoCodec" value="MPEG-4 DivX / Xvid" id="65"/>
+				<subtype type="IVideoStream" value="BD" id="63">
+					<subtype type="IReleaseName" value="%.720p.%" id="61"/>
+					<subtype type="IReleaseName" value="%.1080p.%" id="62"/>
+				</subtype>
+			</subtype>
+		</type>
+		<type name="XXX" id="46"/>
+	</genres>
+</xml>
