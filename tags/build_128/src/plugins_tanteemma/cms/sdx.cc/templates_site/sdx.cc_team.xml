@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<xml>
+	<name>http://www.sdx.cc/</name>
+	<settings>
+		<use_plainlinks>False</use_plainlinks>
+		<use_textasdescription>True</use_textasdescription>
+		<round_size>True</round_size>
+		<team>True</team>
+	</settings>
+	<categorys>
+		<type name="Audio" id="8"/>
+		<type name="GameCube" id="6"/>
+		<type name="Movie" id="5">
+			<subtype type="IVideoCodec" value="MPEG-4 H.264 / AVC" id="12"/>
+			<subtype type="IVideoCodec" value="VC-1" id="12"/>
+		</type>
+		<type name="NintendoDS" id="6"/>
+		<type name="PCGames" id="6"/>
+		<type name="PlayStation2" id="6"/>
+		<type name="PlayStation3" id="6"/>
+		<type name="PlayStationPortable" id="6"/>
+		<type name="Software" id="7"/>
+		<type name="Wii" id="6"/>
+		<type name="Xbox" id="6"/>
+		<type name="Xbox360" id="6"/>
+		<type name="XXX" id="15"/>
+		<type name="Other" id="10"/>
+	</categorys>
+	<sub_categorys>
+		<type name="Audio" id="40">
+			<subtype type="IGenre" value="Electronic" id="47"/>
+			<subtype type="IGenre" value="House" id="47"/>
+			<subtype type="IGenre" value="Trance" id="46"/>
+		</type>
+		<type name="GameCube" id="30"/>
+		<type name="Movie" id="15">
+			<subtype type="IReleaseName" value="%1080p%" id="41"/>
+			<subtype type="IReleaseName" value="%720p%" id="42"/>
+			<subtype type="IGenre" value="Action" id="9"/>
+			<subtype type="IGenre" value="Comedy" id="12"/>
+			<subtype type="IGenre" value="Drama" id="11"/>
+			<subtype type="IGenre" value="Fantasy" id="16"/>
+			<subtype type="IGenre" value="Horror" id="13"/>
+			<subtype type="IGenre" value="Thriller" id="10"/>
+			<subtype type="IGenre" value="War" id="18"/>
+		</type>
+		<type name="NintendoDS" id="30"/>
+		<type name="PCGames" id="22"/>
+		<type name="PlayStation2" id="30"/>
+		<type name="PlayStation3" id="80"/>
+		<type name="PlayStationPortable" id="30"/>
+		<type name="Software" id="39">
+			<subtype type="IGenre" value="AntiVirus &amp; Security" id="32"/>
+			<subtype type="IGenre" value="Office Suites &amp; Applications" id="33"/>
+			<subtype type="IGenre" value="System Utilities" id="31"/>
+		</type>
+		<type name="Wii" id="81"/>
+		<type name="Xbox" id="79"/>
+		<type name="Xbox360" id="79"/>
+		<type name="XXX" id="67">
+			<subtype type="IReleaseName" value="%1080p%" id="69"/>
+			<subtype type="IReleaseName" value="%720p%" id="68"/>
+		</type>
+		<type name="Other" id="45"/>
+	</sub_categorys>
+</xml>

@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<xml>
+  <name>http://1load.net/</name>
+  <type>1load.net</type>
+  <settings>
+    <use_textasdescription>False</use_textasdescription>
+    <use_round_size>True</use_round_size>
+  </settings>
+  <categorys>
+    <type name="Audio" id="25">
+      <subtype type="IReleaseName" value="%Maxi%" id="24"/>
+    </type>
+    <type name="NintendoDS" id="21"/>
+    <type name="Movie" id="14">
+      <subtype type="IReleaseName" value="%.S??E??.%" id="26">
+        <subtype type="IVideoStream" value="BD%" id="27"/>
+      </subtype>
+      <subtype type="IVideoCodec" value="MPEG-2" id="16"></subtype>
+      <subtype type="IVideoStream" value="BD" id="44">
+        <subtype type="IReleaseName" value="%.720p.%" id="37"></subtype>
+        <subtype type="IReleaseName" value="%.1080p.%" id="38"></subtype>
+      </subtype>
+      <subtype type="IVideoStream" value="SCR" id="40"></subtype>
+      <subtype type="IVideoStream" value="DVD-SCR" id="40"></subtype>
+      <subtype type="IVideoStream" value="DVD-RIP" id="15"></subtype>
+      <subtype type="IVideoStream" value="R?" id="15"></subtype>
+      <subtype type="IVideoStream" value="BD-RIP" id="39"></subtype>
+      <subtype type="IVideoStream" value="TV-RIP" id="15">
+        <subtype type="IReleaseName" value="%.720p.%" id="37"></subtype>
+        <subtype type="IReleaseName" value="%.1080p.%" id="38"></subtype>
+      </subtype>
+    </type>
+    <type name="PCGames" id="18"/>
+    <type name="PlayStation2" id="43"/>
+    <type name="PlayStation3" id="43"/>
+    <type name="PlayStationPortable" id="22"/>
+    <type name="Software" id="23">
+      <subtype type="IReleaseName" value="Video2Brain%" id="42"/>
+    </type>
+    <type name="Wii" id="20"/>
+    <type name="Xbox" id="19"/>
+    <type name="Xbox360" id="19"/>
+    <type name="XXX" id="28">
+      <subtype type="IReleaseName" value="%.iMAGESET%" id="30"/>
+      <subtype type="IReleaseName" value="%.XXX.%" id="29"/>
+    </type>
+  </categorys>
+  <genres>
+    <type name="Audio" id="52">
+      <subtype type="IGenre" value="Classical" id="50"/>
+      <subtype type="IGenre" value="Dance" id="45"/>
+      <subtype type="IGenre" value="Electronic" id="90"/>
+      <subtype type="IGenre" value="Hip-Hop" id="41"/>
+      <subtype type="IGenre" value="House" id="46"/>
+      <subtype type="IGenre" value="Pop" id="48"/>
+      <subtype type="IGenre" value="Punk" id="49"/>
+      <subtype type="IGenre" value="R&amp;B" id="42"/>
+      <subtype type="IGenre" value="Metal" id="47"/>
+      <subtype type="IGenre" value="Rock" id="47"/>
+      <subtype type="IGenre" value="Trance" id="44"/>
+    </type>
+    <type name="NintendoDS" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="Movie" id="2">
+      <subtype type="IReleaseName" value="%.S??E??.%" id="106">
+        <subtype type="IGenre" value="Action" id="106"/>
+        <subtype type="IGenre" value="Animation" id="109"/>
+        <subtype type="IGenre" value="Comedy" id="99"/>
+        <subtype type="IGenre" value="Crime" id="96"/>
+        <subtype type="IGenre" value="Documentation" id="121"/>
+        <subtype type="IGenre" value="Drama" id="111"/>
+        <subtype type="IGenre" value="Fantasy" id="112"/>
+        <subtype type="IGenre" value="Horror" id="138"/>
+        <subtype type="IGenre" value="Mystery" id="113"/>
+        <subtype type="IGenre" value="Science Fiction" id="114"/>
+      </subtype>
+      <subtype type="IVideoStream" value="BD" id="27">
+        <subtype type="IGenre" value="Action" id="27"/>
+        <subtype type="IGenre" value="Adventure" id="26"/>
+        <subtype type="IGenre" value="Animation" id="102"/>
+        <subtype type="IGenre" value="Comedy" id="28"/>
+        <subtype type="IGenre" value="Crime" id="132"/>
+        <subtype type="IGenre" value="Documentation" id="29"/>
+        <subtype type="IGenre" value="Drama" id="30"/>
+        <subtype type="IGenre" value="Fantasy" id="37"/>
+        <subtype type="IGenre" value="Horror" id="31"/>
+        <subtype type="IGenre" value="Mystery" id="116"/>
+        <subtype type="IGenre" value="Romance" id="33"/>
+        <subtype type="IGenre" value="Science Fiction" id="34"/>
+        <subtype type="IGenre" value="Thriller" id="35"/>
+        <subtype type="IGenre" value="War" id="93"/>
+        <subtype type="IGenre" value="Western" id="36"/>
+      </subtype>
+      <subtype type="IGenre" value="Action" id="2"/>
+      <subtype type="IGenre" value="Adventure" id="3"/>
+      <subtype type="IGenre" value="Animation" id="101"/>
+      <subtype type="IGenre" value="Comedy" id="4"/>
+      <subtype type="IGenre" value="Crime" id="133"/>
+      <subtype type="IGenre" value="Documentation" id="11"/>
+      <subtype type="IGenre" value="Drama" id="5"/>
+      <subtype type="IGenre" value="Fantasy" id="38"/>
+      <subtype type="IGenre" value="Horror" id="6"/>
+      <subtype type="IGenre" value="Mystery" id="115"/>
+      <subtype type="IGenre" value="Romance" id="7"/>
+      <subtype type="IGenre" value="Science Fiction" id="8"/>
+      <subtype type="IGenre" value="Thriller" id="9"/>
+      <subtype type="IGenre" value="War" id="92"/>
+      <subtype type="IGenre" value="Western" id="10"/>
+    </type>
+    <type name="PCGames" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="PlayStation2" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="PlayStation3" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="PlayStationPortable" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="Software" id="40">
+      <subtype type="IReleaseName" value="Video2Brain%" id="76"/>
+      <subtype type="IGenre" value="AntiVirus &amp; Security" id="39"/>
+      <subtype type="IGenre" value="Audio &amp; Music" id="22"/>
+      <subtype type="IGenre" value="Multimedia &amp; Video" id="79"/>
+    </type>
+    <type name="Wii" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="Xbox" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="Xbox360" id="13">
+      <subtype type="IGenre" value="Action" id="13"/>
+      <subtype type="IGenre" value="Adventure" id="12"/>
+      <subtype type="IGenre" value="FPS" id="89"/>
+      <subtype type="IGenre" value="Racing" id="16"/>
+      <subtype type="IGenre" value="RPG" id="75"/>
+      <subtype type="IGenre" value="Simulation" id="18"/>
+      <subtype type="IGenre" value="Sport" id="19"/>
+      <subtype type="IGenre" value="Strategy" id="20"/>
+    </type>
+    <type name="XXX" id="74">
+      <subtype type="IGenre" value="Amateur" id="56"/>
+      <subtype type="IGenre" value="Anal" id="57"/>
+      <subtype type="IGenre" value="Blowjob" id="62"/>
+      <subtype type="IGenre" value="Teen" id="69"/>
+    </type>
+  </genres>
+  <formats>
+    <type name="Audio" id="44">
+      <subtype type="IAudioEncoder" value="LAME" id="35"/>
+      <subtype type="IAudioEncoder" value="Windows Media Encoder" id="52"/>
+    </type>
+    <type name="NintendoDS" id="40"/>
+    <type name="Movie" id="1">
+      <subtype type="IReleaseName" value="%.S??E??.%" id="39"/>
+      <subtype type="IVideoStream" value="BD" id="41"/>
+      <subtype type="IVideoCodec" value="MPEG-4 H.264 / AVC" id="49"/>
+      <subtype type="IVideoCodec" value="VC-1" id="54"/>
+    </type>
+    <type name="PCGames" id="40"/>
+    <type name="PlayStation2" id="40"/>
+    <type name="PlayStation3" id="40"/>
+    <type name="PlayStationPortable" id="40"/>
+    <type name="Software" id="34"/>
+    <type name="Wii" id="40"/>
+    <type name="Xbox" id="40"/>
+    <type name="Xbox360" id="40"/>
+    <type name="XXX" id="38">
+      <subtype type="IVideoCodec" value="MPEG-4 H.264 / AVC" id="48"/>
+      <subtype type="IVideoCodec" value="VC-1" id="51"/>
+    </type>
+  </formats>
+</xml>

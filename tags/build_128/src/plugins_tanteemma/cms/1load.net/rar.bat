@@ -1,0 +1,1 @@
+..\auto_rar.exe "%CD%"
