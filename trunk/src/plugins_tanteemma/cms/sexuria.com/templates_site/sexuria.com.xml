@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xml>
+	<name>http://sexuria.com/</name>
+	<settings>
+		<use_plainlinks>True</use_plainlinks>
+		<use_textasdescription>False</use_textasdescription>
+		<round_size>False</round_size>
+		<hoster_blacklist>Netload.in</hoster_blacklist>
+	</settings>
+	<categorys>
+		<type name="XXX" id="Scenes">
+			<subtype type="IReleaseName" value="%iMAGESET%" id="Pic-Sets"/>
+			<subtype type="IReleaseName" value="%720p%" id="HD-DVDs"/>
+			<subtype type="IReleaseName" value="%1080p%" id="HD-DVDs"/>
+			<subtype type="IReleaseName" value="%XXX%" id="DVD Rips"/>
+		</type>
+	</categorys>
+</xml>

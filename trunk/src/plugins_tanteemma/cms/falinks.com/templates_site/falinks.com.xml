@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xml>
+	<name>http://falinks.com/</name>
+	<type>falinks.com</type>
+	<settings>
+		<use_plainlinks>True</use_plainlinks>
+		<use_textasdescription>True</use_textasdescription>
+	</settings>
+	<categorys>
+		<type name="Audio" id="42"/>
+		<type name="Movie" id="15"/>
+		<type name="NintendoDS" id="25"/>
+		<type name="PCGames" id="18"/>
+		<type name="PlayStation2" id="21"/>
+		<type name="PlayStation3" id="19"/>
+		<type name="PlayStationPortable" id="24"/>
+		<type name="Software" id="32"/>
+		<type name="Wii" id="23"/>
+		<type name="Xbox" id="22"/>
+		<type name="Xbox360" id="20"/>
+	</categorys>
+</xml>
