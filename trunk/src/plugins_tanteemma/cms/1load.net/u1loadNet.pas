@@ -4,17 +4,17 @@ interface
 
 uses
   // Delphi
-  Windows, SysUtils, StrUtils, Classes, Controls, Variants,
-  // Indy
-  IdGlobalProtocols,
+  Windows, SysUtils, StrUtils,  Variants,
   // RegEx
   RegExpr,
   // Utils,
-  uHTMLUtils, uSpecialStringUtils,
+  uHTMLUtils,
   // Common
-  uConst, uAppInterface,
+  uConst, uWebsiteInterface,
+  // HTTPManager
+  uHTTPInterface, uHTTPClasses,
   // Plugin system
-  uPlugInCMSClass, uPlugInCMSFormbasedClass, uPlugInCMSSettingsHelper, uIdHTTPHelper;
+  uPlugInCMSClass, uPlugInCMSFormbasedClass, uPlugInHTTPClasses;
 
 type
 
@@ -24,9 +24,6 @@ type
 
     fgenres, fformats: Variant;
   published
-    [AttrDefaultValue('')]
-    property hoster_blacklist;
-
     [AttrDefaultValue(False)]
     property use_textasdescription;
     [AttrDefaultValue(False)]
@@ -41,34 +38,52 @@ type
   private
     _1loadNetSettings: T1loadNetSettings;
   protected
-    function LoadSettings(AComponentController: IComponentController = nil): Boolean; override;
-    function Login(AIdHTTPHelper: TIdHTTPHelper): Boolean; override;
-    function PostPage(AIdHTTPHelper: TIdHTTPHelper; AComponentController: IComponentController; AMirrorController: IMirrorController;
-      APrevResponse: string = ''): Boolean; override;
+    function SettingsClass: TCMSPlugInSettingsMeta; override;
+    function GetSettings: TCMSPlugInSettings; override;
+    procedure SetSettings(ACMSPlugInSettings: TCMSPlugInSettings); override;
+    function LoadSettings(const AWebsiteData: ICMSWebsiteData = nil): Boolean; override;
+
+    function DoBuildLoginRequest(out AHTTPRequest: IHTTPRequest; out AHTTPParams: IHTTPParams; out AHTTPOptions: IHTTPOptions; APrevResponse: string;
+      ACAPTCHALogin: Boolean = False): Boolean; override;
+    function DoAnalyzeLogin(AResponseStr: string; out ACAPTCHALogin: Boolean): Boolean; override;
+
+    function DoBuildPostRequest(const AWebsiteData: ICMSWebsiteData; out AHTTPRequest: IHTTPRequest; out AHTTPParams: IHTTPParams;
+      out AHTTPOptions: IHTTPOptions; APrevResponse: string; APrevRequest: Double): Boolean; override;
+    function DoAnalyzePost(AResponseStr: string; AHTTPProcess: IHTTPProcess): Boolean; override;
   public
-    constructor Create; override;
-    destructor Destroy; override;
     function GetName: WideString; override; safecall;
     function DefaultCharset: WideString; override;
-    function BelongsTo(AWebsiteSourceCode: WideString): Boolean; override;
-    function GetIDs: Integer; override;
-    function ShowWebsiteSettingsEditor(AWebsiteEditor: IWebsiteEditor): Boolean; override;
+    function BelongsTo(AWebsiteSourceCode: WideString): WordBool; override;
   end;
 
 implementation
 
 { T1loadNet }
 
+function T1loadNet.SettingsClass: TCMSPlugInSettingsMeta;
+begin
+  Result := T1loadNetSettings;
+end;
+
+function T1loadNet.GetSettings;
+begin
+  Result := _1loadNetSettings;
+end;
+
+procedure T1loadNet.SetSettings;
+begin
+  _1loadNetSettings := ACMSPlugInSettings as T1loadNetSettings;
+end;
+
 function T1loadNet.LoadSettings;
 begin
-  Result := True;
-  TPlugInCMSSettingsHelper.LoadSettingsToClass(SettingsFileName, _1loadNetSettings, AComponentController);
+  Result := inherited LoadSettings(AWebsiteData);
   with _1loadNetSettings do
   begin
     if SameStr('', CharSet) then
       CharSet := DefaultCharset;
 
-    if Assigned(AComponentController) and (categorys = null) then
+    if Assigned(AWebsiteData) and (categorys = null) then
     begin
       ErrorMsg := 'category is undefined!';
       Result := False;
@@ -76,65 +91,50 @@ begin
   end;
 end;
 
-function T1loadNet.Login(AIdHTTPHelper: TIdHTTPHelper): Boolean;
-var
-  Params: TStringList;
-  Enc: TEncoding;
-  ResponseStr: string;
+function T1loadNet.DoBuildLoginRequest;
 begin
-  Result := False;
-  with AIdHTTPHelper do
+  Result := True;
+
+  AHTTPRequest := THTTPRequest.Create(Website + 'user/login');
+  with AHTTPRequest do
+  begin
+    Referer := Website;
+    CharSet := _1loadNetSettings.CharSet;
+  end;
+
+  AHTTPParams := THTTPParams.Create;
+  with AHTTPParams do
+  begin
+    AddFormField('ident', AccountName);
+    AddFormField('password', AccountPassword);
+    AddFormField('go', 'GO!');
+  end;
+
+  AHTTPOptions := TPlugInHTTPOptions.Create(Self);
+  with AHTTPOptions do
   begin
     RedirectMaximum := 1;
-
-    Params := TStringList.Create;
-    try
-      with Params do
-      begin
-        Add('ident=' + AccountName);
-        Add('password=' + AccountPassword);
-        Add('go=GO!');
-      end;
-
-      Request.CharSet := _1loadNetSettings.CharSet;
-      Enc := CharsetToEncoding(Request.CharSet);
-      try
-        try
-          ResponseStr := Post(Website + 'user/login', Params, Enc);
-        except
-          on E: Exception do
-          begin
-            ErrorMsg := E.message;
-            Exit;
-          end;
-        end;
-      finally
-        Enc.Free;
-      end;
-    finally
-      Params.Free;
-    end;
-
-    if (Pos('/user/logout', ResponseStr) = 0) and not(ResponseStr = '') then
-    begin
-      with TRegExpr.Create do
-        try
-          InputString := ResponseStr;
-          Expression := 'class="error">(.*?)<\/p>';
-
-          if Exec(InputString) then
-            Self.ErrorMsg := Trim(HTML2Text(Match[1]));
-        finally
-          Free;
-        end;
-      Exit;
-    end;
   end;
-  Result := True;
 end;
 
-function T1loadNet.PostPage(AIdHTTPHelper: TIdHTTPHelper; AComponentController: IComponentController; AMirrorController: IMirrorController;
-  APrevResponse: string): Boolean;
+function T1loadNet.DoAnalyzeLogin;
+begin
+  ACAPTCHALogin := False;
+  Result := not(Pos('/user/logout', AResponseStr) = 0) and (AResponseStr = '');
+  if not Result then
+    with TRegExpr.Create do
+      try
+        InputString := AResponseStr;
+        Expression := 'class="error">(.*?)<\/p>';
+
+        if Exec(InputString) then
+          Self.ErrorMsg := Trim(HTML2Text(Match[1]));
+      finally
+        Free;
+      end;
+end;
+
+function T1loadNet.DoBuildPostRequest;
 
   function convert_hosternames(AHosterName: string): string;
 
@@ -204,8 +204,9 @@ function T1loadNet.PostPage(AIdHTTPHelper: TIdHTTPHelper; AComponentController: 
   var
     I: Integer;
   begin
+    Result := '';
     for I := 0 to length(HosterList) - 1 do
-      if AnsiSameText(AHosterName, HosterList[I][0]) then
+      if SameText(AHosterName, HosterList[I][0]) then
       begin
         Result := HosterList[I][1];
         break;
@@ -213,210 +214,155 @@ function T1loadNet.PostPage(AIdHTTPHelper: TIdHTTPHelper; AComponentController: 
   end;
 
 var
-  Params: TStringList;
-  Enc: TEncoding;
-  ResponseStr: string;
+  I: Integer;
 
   FormatSettings: TFormatSettings;
-
-  I: Integer;
 begin
+  Result := True;
+
   GetLocaleFormatSettings(LOCALE_SYSTEM_DEFAULT, FormatSettings);
   FormatSettings.DecimalSeparator := '.';
 
-  Result := False;
-  with AIdHTTPHelper do
+  AHTTPRequest := THTTPRequest.Create(Website + 'create-upload');
+  with AHTTPRequest do
   begin
-    Params := TStringList.Create;
-    try
-      with Params do
+    Referer := Website;
+    CharSet := _1loadNetSettings.CharSet;
+  end;
+
+  AHTTPParams := THTTPParams.Create;
+  with AHTTPParams do
+  begin
+    AddFormField('title', Subject);
+
+    if Assigned(AWebsiteData.FindControl(cReleaseName)) then
+      AddFormField('release', AWebsiteData.FindControl(cReleaseName).Value);
+
+    AddFormField('category_id', VarToStr(_1loadNetSettings.categorys));
+
+    AddFormField('genre_id', VarToStr(_1loadNetSettings.genres));
+
+    AddFormField('format_id', VarToStr(_1loadNetSettings.formats));
+
+    if Assigned(AWebsiteData.FindControl(cReleaseDate)) then
+      AddFormField('release_year', FormatDateTime('yyyy', StrToDateTimeDef(AWebsiteData.FindControl(cReleaseDate).Value, Now, FormatSettings), FormatSettings))
+    else
+      AddFormField('release_year', FormatDateTime('yyyy', Now, FormatSettings));
+
+    for I := 0 to AWebsiteData.MirrorCount - 1 do
+      if AWebsiteData.Mirror[I].Size > 0 then
       begin
-        Add('title=' + Subject);
-
-        if Assigned(AComponentController.FindControl(cReleaseName)) then
-          Add('release=' + AComponentController.FindControl(cReleaseName).Value);
-
-        Add('category_id=' + VarToStr(_1loadNetSettings.categorys));
-
-        Add('genre_id=' + VarToStr(_1loadNetSettings.genres));
-
-        Add('format_id=' + VarToStr(_1loadNetSettings.formats));
-
-        if Assigned(AComponentController.FindControl(cReleaseDate)) then
-          Add('release_year=' + FormatDateTime('yyyy', StrToDateTimeDef(AComponentController.FindControl(cReleaseDate).Value, Now, FormatSettings),
-              FormatSettings))
+        if _1loadNetSettings.round_size then
+          AddFormField('size', IntToStr(round(AWebsiteData.Mirror[I].Size)))
         else
-          Add('release_year=' + FormatDateTime('yyyy', Now, FormatSettings));
-
-        for I := 0 to AMirrorController.MirrorCount - 1 do
-          if AMirrorController.Mirror[I].Size > 0 then
-          begin
-            if _1loadNetSettings.round_size then
-              Add('size=' + IntToStr(round(AMirrorController.Mirror[I].Size)))
-            else
-              Add('size=' + FloatToStr(AMirrorController.Mirror[I].Size, FormatSettings));
-            break;
-          end;
-
-        if Assigned(AComponentController.FindControl(cPicture)) then
-          Add('cover_link=' + AComponentController.FindControl(cPicture).Value);
-
-        Add('xrel_link=');
-
-        if Assigned(AComponentController.FindControl(cSample)) then
-          Add('sample=' + AComponentController.FindControl(cSample).Value);
-
-        if Assigned(AComponentController.FindControl(cPassword)) then
-          Add('password=' + AComponentController.FindControl(cPassword).Value);
-
-        if Assigned(AComponentController.FindControl(cLanguage)) then
-        begin
-          if SameText('GER;ENG', AComponentController.FindControl(cLanguage).Value) then
-            Add('language=Englisch-Deutsch')
-          else if not(Pos(';', AComponentController.FindControl(cLanguage).Value) = 0) and
-            (Pos('GER', string(AComponentController.FindControl(cLanguage).Value)) > 0) then
-            Add('language=Multi inkl. Deutsch')
-          else if not(Pos(';', AComponentController.FindControl(cLanguage).Value) = 0) then
-            Add('language=Multi')
-          else
-            case IndexText(AComponentController.FindControl(cLanguage).Value, ['GER', 'ENG', 'SPA', 'JPN', 'FRE', 'ITA', 'RUS', 'TUR']) of
-              0:
-                Add('language=Deutsch');
-              1:
-                Add('language=Englisch');
-              2:
-                Add('language=Spanisch');
-              3:
-                Add('language=Japanisch');
-              4:
-                Add('language=Franz&ouml;sisch');
-              5:
-                Add('language=Italienisch');
-              6:
-                Add('language=Russisch');
-              7:
-                Add('language=T&uuml;rkisch');
-            else
-              Add('language=Unbekannt');
-            end
-        end
-        else
-          Add('language=Unbekannt');
-
-        if not _1loadNetSettings.use_textasdescription then
-        begin
-          if Assigned(AComponentController.FindControl(cDescription)) then
-            Add('description=' + AComponentController.FindControl(cDescription).Value);
-        end
-        else
-          Add('description=' + Message);
-
-        for I := 0 to AMirrorController.MirrorCount - 1 do
-          if (Pos(string(AMirrorController.Mirror[I].Hoster), _1loadNetSettings.hoster_blacklist) = 0) then
-            if (AMirrorController.Mirror[I].CrypterCount > 0) then
-            begin
-              Add('download_link[]=' + AMirrorController.Mirror[I].Crypter[0].Link);
-              Add('hosters[]=' + convert_hosternames(AMirrorController.Mirror[I].Hoster));
-              Add('status_image[]=' + AMirrorController.Mirror[I].Crypter[0].StatusImage);
-              Add('members_only[]=0');
-            end
-            else
-            begin
-              ErrorMsg := 'No crypter initialized! (disable use_plainlinks or add a crypter)';
-              Exit;
-            end;
-
-        Add('submit=Upload Eintragen');
+          AddFormField('size', FloatToStr(AWebsiteData.Mirror[I].Size, FormatSettings));
+        break;
       end;
 
-      Request.CharSet := _1loadNetSettings.CharSet;
-      Enc := CharsetToEncoding(Request.CharSet);
-      try
-        try
-          ResponseStr := Post(Website + 'create-upload', Params, Enc);
-        except
-          on E: Exception do
-          begin
-            ErrorMsg := E.message;
-            Exit;
-          end;
-        end;
-      finally
-        Enc.Free;
-      end;
+    if Assigned(AWebsiteData.FindControl(cPicture)) then
+      AddFormField('cover_link', AWebsiteData.FindControl(cPicture).Value);
 
-      (*
-        with TStringList.Create do
-        try
-        Text := ResponseStr;
-        SaveToFile(ExtractFilePath(ParamStr(0)) + 'a.htm');
-        finally
-        Free;
-        end;
-        *)
+    AddFormField('xrel_link', '');
 
-      if not(Pos('class="error"', ResponseStr) = 0) then
+    if Assigned(AWebsiteData.FindControl(cSample)) then
+      AddFormField('sample', AWebsiteData.FindControl(cSample).Value);
+
+    if Assigned(AWebsiteData.FindControl(cPassword)) then
+      AddFormField('password', AWebsiteData.FindControl(cPassword).Value);
+
+    if Assigned(AWebsiteData.FindControl(cLanguage)) then
+    begin
+      if SameText('GER;ENG', AWebsiteData.FindControl(cLanguage).Value) then
+        AddFormField('language', 'Englisch-Deutsch')
+      else if not(Pos(';', AWebsiteData.FindControl(cLanguage).Value) = 0) and (Pos('GER', string(AWebsiteData.FindControl(cLanguage).Value)) > 0) then
+        AddFormField('language', 'Multi inkl. Deutsch')
+      else if not(Pos(';', AWebsiteData.FindControl(cLanguage).Value) = 0) then
+        AddFormField('language', 'Multi')
+      else
+        case IndexText(AWebsiteData.FindControl(cLanguage).Value, ['GER', 'ENG', 'SPA', 'JPN', 'FRE', 'ITA', 'RUS', 'TUR']) of
+          0:
+            AddFormField('language', 'Deutsch');
+          1:
+            AddFormField('language', 'Englisch');
+          2:
+            AddFormField('language', 'Spanisch');
+          3:
+            AddFormField('language', 'Japanisch');
+          4:
+            AddFormField('language', 'Franz&ouml;sisch');
+          5:
+            AddFormField('language', 'Italienisch');
+          6:
+            AddFormField('language', 'Russisch');
+          7:
+            AddFormField('language', 'T&uuml;rkisch');
+        else
+          AddFormField('language', 'Unbekannt');
+        end
+    end
+    else
+      AddFormField('language', 'Unbekannt');
+
+    if not _1loadNetSettings.use_textasdescription then
+    begin
+      if Assigned(AWebsiteData.FindControl(cDescription)) then
+        AddFormField('description', AWebsiteData.FindControl(cDescription).Value);
+    end
+    else
+      AddFormField('description', Message);
+
+    for I := 0 to AWebsiteData.MirrorCount - 1 do
+      if (AWebsiteData.Mirror[I].CrypterCount > 0) then
       begin
-        with TRegExpr.Create do
-          try
-            InputString := ResponseStr;
-
-            if (Pos('div class="error"', ResponseStr) = 0) then
-              Expression := 'class="error">(.*?)<\/'
-            else
-              Expression := 'class="error".*?<ul>(.*?)<\/ul>';
-
-            if Exec(InputString) then
-              Self.ErrorMsg := HTML2Text(Trim(Match[1]));
-          finally
-            Free;
-          end;
+        AddFormField('download_link[]', AWebsiteData.Mirror[I].Crypter[0].Value);
+        AddFormField('hosters[]', convert_hosternames(AWebsiteData.Mirror[I].Hoster));
+        AddFormField('status_image[]', AWebsiteData.Mirror[I].Crypter[0].StatusImage);
+        AddFormField('members_only[]', '0');
+      end
+      else
+      begin
+        ErrorMsg := 'No crypter initialized! (disable use_plainlinks or add a crypter)';
         Exit;
       end;
 
-      Result := True;
-    finally
-      Params.Free;
-    end;
+    AddFormField('submit', 'Upload Eintragen');
   end;
+
+  AHTTPOptions := TPlugInHTTPOptions.Create(Self);
 end;
 
-constructor T1loadNet.Create;
+function T1loadNet.DoAnalyzePost;
 begin
-  inherited Create;
-  _1loadNetSettings := T1loadNetSettings.Create;
+  Result := (Pos('class="error"', AResponseStr) = 0);
+  if not Result then
+    with TRegExpr.Create do
+      try
+        InputString := AResponseStr;
+        if (Pos('div class="error"', AResponseStr) = 0) then
+          Expression := 'class="error">(.*?)<\/'
+        else
+          Expression := 'class="error".*?<ul>(.*?)<\/ul>';
+
+        if Exec(InputString) then
+          Self.ErrorMsg := HTML2Text(Trim(Match[1]));
+      finally
+        Free;
+      end;
 end;
 
-destructor T1loadNet.Destroy;
-begin
-  _1loadNetSettings.Free;
-  inherited Destroy;
-end;
-
-function T1loadNet.GetName: WideString;
+function T1loadNet.GetName;
 begin
   Result := '1load.net';
 end;
 
-function T1loadNet.DefaultCharset: WideString;
+function T1loadNet.DefaultCharset;
 begin
   Result := 'UTF-8';
 end;
 
-function T1loadNet.BelongsTo(AWebsiteSourceCode: WideString): Boolean;
+function T1loadNet.BelongsTo;
 begin
   Result := (Pos('action="/user/login"', string(AWebsiteSourceCode)) > 0) and (Pos('name="ident" value="Username"', string(AWebsiteSourceCode)) > 0);
-end;
-
-function T1loadNet.GetIDs: Integer;
-begin
-  Result := FCheckedIDsList.Count;
-end;
-
-function T1loadNet.ShowWebsiteSettingsEditor;
-begin
-  TPlugInCMSSettingsHelper.LoadSettingsToWebsiteEditor(SettingsFileName, T1loadNetSettings, AWebsiteEditor);
-  Result := IsPositiveResult(AWebsiteEditor.ShowModal);
 end;
 
 end.
